@@ -9,36 +9,37 @@ const createProduct = async (req, res, next) => {
   }
 };
 const getProduct = async (req, res, next) => {
-  const {category,_id}  = req.query;
+  const { category, _id } = req.query;
   let products;
   try {
-    if(category||_id){
-      products = await productModel.find({...req.query}).populate("owner");
-    }else{  
-     products = await productModel.find({}).populate("owner");
+    if (category || _id) {
+      products = await productModel.find({ ...req.query }).populate("owner");
+    } else {
+      products = await productModel.find({}).populate("owner");
     }
-    return res.status(200).json({ message:products,status:200});
-
+    return res.status(200).json({ message: products, success: true });
   } catch (error) {
     next(error);
   }
 };
-const reduceQuantityOfProduct=async(req,res,next)=>{
-  const {product,quantity} =  req.body; 
+const reduceQuantityOfProduct = async (req, res, next) => {
+  const { product, quantity } = req.body;
   try {
-        await productModel.findByIdAndUpdate(product,
-        {
-         $inc: { quantity: -quantity } 
-        },
-        {
-        new:true,
-        returnDocument:true
-      })
-      res.status(200).json({message:"transaction successfull",success:true})
+    await productModel.findByIdAndUpdate(
+      product,
+      {
+        $inc: { quantity: -quantity },
+      },
+      {
+        new: true,
+        returnDocument: true,
+      }
+    );
+    res.status(200).json({ message: "transaction successfull", success: true });
   } catch (error) {
-      next(error)
+    next(error);
   }
-}
+};
 
 const updateProduct = async (req, res, next) => {
   const productId = req.params.id;
@@ -71,20 +72,27 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-const searchProductByUser=async(req,res,next)=>{
+const searchProductByUser = async (req, res, next) => {
   try {
-     const searchedProduct =await  productModel.find({
-              $or: [
-                {
-                  name: { $regex: req.query.search, $options: "i" },
-                },
-                { desc: { $regex: req.query.search, $options: "i" } },
-              ],
-            })
+    const searchedProduct = await productModel.find({
+      $or: [
+        {
+          name: { $regex: req.query.search, $options: "i" },
+        },
+        { desc: { $regex: req.query.search, $options: "i" } },
+      ],
+    });
 
-            res.status(200).json({message:searchedProduct,success:true})
+    res.status(200).json({ message: searchedProduct, success: true });
   } catch (error) {
-      next(error)
+    next(error);
   }
-}
-module.exports = { createProduct,reduceQuantityOfProduct, getProduct, updateProduct, deleteProduct ,searchProductByUser};
+};
+module.exports = {
+  createProduct,
+  reduceQuantityOfProduct,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+  searchProductByUser,
+};

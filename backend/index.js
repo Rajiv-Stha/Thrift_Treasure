@@ -37,6 +37,6 @@ app.use("/api/user", require("./routes/userRoute"));
 app.use("/api/category", require("./routes/categoryRote"));
 app.use("/api/comment", require("./routes/CommentRoute"));
 
-app.use(require("./middlewares/error"))
+app.use(require("./middlewares/error"));
 
 app.listen(8000, () => console.log("server listening on port 8000"));
