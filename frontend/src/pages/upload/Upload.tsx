@@ -153,7 +153,7 @@ const Upload = () => {
       <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formHeader}>
 
-    <IoMdCloudUpload/>
+    <IoMdCloudUpload/>  
     <h2 className={styles.uploadHeading}>Sell your item</h2>
       </div>
 
@@ -161,7 +161,7 @@ const Upload = () => {
 
         <div className={styles.inputItem}>
           <label htmlFor="name" >Name</label>
-          <input type="text" name="name" id="name" placeholder="Enter your name" onChange={handleInputChange} value={uploadData.name} />
+          <input type="text" name="name" id="name" placeholder="Enter product name" onChange={handleInputChange} value={uploadData.name} />
         </div>
 
 
